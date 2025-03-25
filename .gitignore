@@ -1,3 +1,14 @@
+# macOS
+
+.DS_Store
+*/.DS_Store
+*.swp
+*.lock
+*.log
+*.tmp
+*.bak
+Thumbs.db
+
 # Logs
 
 logs

@@ -8,6 +8,11 @@ The Worker handles audio transcription and note enhancement using [Cloudflare Wo
 
 - Real-time audio transcription using [whisper-large-v3-turbo](https://developers.cloudflare.com/workers-ai/models/whisper-large-v3-turbo/)
 - Context-aware note enhancement using [llama-3.3-70b-instruct-fp8-fast](https://developers.cloudflare.com/workers-ai/models/llama-3.3-70b-instruct-fp8-fast/)
+- Multi-stage processing pipeline:
+  - Transcript to comprehensive notes conversion
+  - Points of emphasis identification
+  - Action item extraction
+  - Final enhanced notes generation
 - Zero data retention - processes data in-memory only
 - Optional Cloudflare Access authentication support
 
@@ -33,7 +38,51 @@ Handles audio transcription requests.
 }
 ```
 
-### POST /enhance
+### POST /transcription-notes
+
+Converts raw transcript text into structured, comprehensive notes.
+
+**Input:**
+```json
+{
+  "transcript": "Raw transcript text"
+}
+```
+
+**Output:**
+- Server-sent events (SSE) stream of formatted notes
+
+### POST /points-of-emphasis
+
+Identifies important points that appear in both user notes and transcript.
+
+**Input:**
+```json
+{
+  "userNotes": "User's markdown notes",
+  "transcriptNotes": "Processed transcript notes"
+}
+```
+
+**Output:**
+- Server-sent events (SSE) stream of emphasized points
+
+### POST /action-items
+
+Extracts action items from meeting notes and transcript.
+
+**Input:**
+```json
+{
+  "userNotes": "User's markdown notes",
+  "transcriptNotes": "Processed transcript notes"
+}
+```
+
+**Output:**
+- Server-sent events (SSE) stream of action items
+
+### POST /enhance (Deprecated - use the endpoints above)
 
 Processes and enhances meeting notes using transcript context.
 
@@ -47,7 +96,7 @@ Processes and enhances meeting notes using transcript context.
 
 **Output:**
 - Server-sent events (SSE) stream
-- Enhances notes using [prompt](https://github.com/jonesphillip/yorgurt-worker/blob/main/src/prompts.ts#L1)
+- Enhances notes using [prompts](https://github.com/jonesphillip/yogurt-worker/blob/main/src/prompts.ts)
 
 ## Deployment
 
@@ -66,6 +115,14 @@ Processes and enhances meeting notes using transcript context.
    ```bash
    npx wrangler deploy
    ```
+
+## Development
+
+For local development:
+
+```bash
+npx wrangler dev
+```
 
 ## Integration with Yogurt
 
