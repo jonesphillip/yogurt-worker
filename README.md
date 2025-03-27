@@ -1,5 +1,7 @@
 # Yogurt Worker
 
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/jonesphillip/yogurt-worker)
+
 This repository contains the [Cloudflare Worker](https://developers.cloudflare.com/workers/) implementation for [Yogurt](https://github.com/jonesphillip/yogurt), a macOS notes app that enhances meeting notes by capturing and transcribing both system audio and microphone input.
 
 The Worker handles audio transcription and note enhancement using [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/), providing two key endpoints that the Yogurt macOS app relies on.
